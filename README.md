@@ -4,16 +4,20 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+Our app helps students discover NYU study spaces through peer feedback, enabling smarter decisions about where to study and collaborate.
 
 ## User stories
-### Primary User: NYU Studdents
-1. As an NYU student, I want to quickly discover available study spaces on campus so that I don’t waste time searching for a quiet place to work.
+### Primary User: NYU Students
+1. As an NYU student, I want to browse all study locations near campus so that I don’t waste time searching for a quiet place to work.
 2. As an NYU student, I want to read reviews about study spots so that I can choose a place that matches my noise tolerance and study preferences.
 3. As an NYU student, I want to leave reviews and comments about study locations so that I can help other students find good places to study.
-4. As an NYU student, I want to filter study spots by noise level, seating availability, and outlet access so that I can find a place that fits my specific study needs.
-5. As an NYU student during midterms, I want to see which study locations are currently crowded so that I can avoid full spaces.
-6. As an NYU student, I want to know places that can be reserved/used for group study.
+4. As an NYU student, I want to filter study spots by noise level so that I can find a place that fits my specific study needs.
+5. As an NYU student, I want to filter study spots by seating availability so that I can find a place that fits my specific study needs. 
+6. As an NYU student, I want to filter study spots by outlet access so that I can find a place that fits my specific study needs.
+7. As an NYU student, I want to know how hot or cold a study spot is so that I can know if I want to sit there based on my preference. 
+8. As an NYU student, I want to know places that can be reserved/used for group study.
+9. As an NYU student, I want to check a place's hours so that I can make sure I am going to places I can sit at.
+10. As an NYU student,  I want to view photos of a spot so that I know if I want to sit there based on them.
 
 ## Steps necessary to run the software
 
