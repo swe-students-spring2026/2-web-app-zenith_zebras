@@ -19,6 +19,7 @@ Our app helps students discover NYU study spaces through peer feedback, enabling
 9. As an NYU student, I want to check a place's hours so that I can make sure I am going to places I can sit at.
 10. As an NYU student,  I want to view photos of a spot so that I know if I want to sit there based on them.
 11. As an NYU student,  I want to view spots based on location so that I can find places that are near me.
+12. As an NYU student, I want to log into the app so that I can use it.
 
 ## Steps necessary to run the software
 
