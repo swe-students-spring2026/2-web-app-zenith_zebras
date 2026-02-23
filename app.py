@@ -19,6 +19,7 @@ MONGO_URI = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/
 client = MongoClient(MONGO_URI)
 db = client[MONGO_DBNAME]
 posts_collection = db.posts
+users_collection = db.users
 
 app = Flask(__name__)
 
