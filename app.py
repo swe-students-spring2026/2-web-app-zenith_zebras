@@ -23,7 +23,6 @@ users_collection = db.users
 
 app = Flask(__name__)
 
-<<<<<<< Homepage
 # This is temparary until we implement auth, so we can use url_for() in templates without crashing
 @app.get("/")
 def root():
@@ -46,11 +45,6 @@ def root():
 # -----------------------
 # Placeholder routes so url_for() won't crash
 # -----------------------
-
-@app.get("/create")
-def create_post():
-    return "<h1>Create Post Page (placeholder)</h1>"
-
 @app.get("/map")
 def map_page():
     return "<h1>Map Page (placeholder)</h1>"
@@ -80,24 +74,8 @@ def home():
     return render_template("home.html", posts=posts, q=q)
 
 # ---------------
-# Create Post
+# View Post
 # ---------------
-
-
-# ---------------
-# Post Details
-# ---------------
-
-
-# ---------------
-# Map Page
-# ---------------
-
-=======
-@app.route("/")
-def home():
-    return redirect(url_for("create_post"))
-
 @app.route("/posts/<post_id>")
 def view_post(post_id):
     post = posts_collection.find_one({"_id": ObjectId(post_id)})
@@ -105,6 +83,9 @@ def view_post(post_id):
         return "Post not found", 404
     return render_template("view_post.html", post=post)
 
+# ---------------
+# Create Post
+# ---------------
 @app.route("/posts/create", methods=["GET", "POST"])
 def create_post():
     if request.method == "POST":
@@ -124,6 +105,9 @@ def create_post():
         return render_template("create_post.html", message="Post created successfully!")
     return render_template("create_post.html")
 
+# ---------------
+# Edit Post
+# ---------------
 @app.route("/posts/<post_id>/edit", methods=["GET", "POST"])
 def edit_post(post_id):
     post = posts_collection.find_one({"_id": ObjectId(post_id)})
@@ -144,11 +128,20 @@ def edit_post(post_id):
         return render_template("edit_post.html", post=updated_data, message="Post updated successfully!")
     return render_template("edit_post.html", post=post)
 
+# ---------------
+# Delete Post
+# ---------------
 @app.route("/posts/<post_id>/delete", methods=["POST"])
 def delete_post(post_id):
     posts_collection.delete_one({"_id": ObjectId(post_id)})
     return "Deleted successfully", 200
->>>>>>> main
+
+# ---------------
+# Map Page
+# ---------------
+
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
