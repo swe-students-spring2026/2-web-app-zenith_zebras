@@ -9,3 +9,12 @@ body {
 #map {
   height: 100%;
 }
+
+#toolbar {
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  font-size: 12pt;
+}

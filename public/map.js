@@ -7,7 +7,7 @@ const studySpots = [
   },
   {
     name: "Paulson",
-    location: [40.72680194538696, -73.99667853782702],
+    location: [40.72679261316092, -73.99697438816108],
     url: "/https://www.google.com/maps/place/John+A.+Paulson+Center/@40.7266231,-74.0001332,17z/data=!4m14!1m7!3m6!1s0x89c2598f1c7ed16f:0x60eb5f760963ed17!2sJohn+A.+Paulson+Center!8m2!3d40.7266231!4d-73.9975583!16s%2Fg%2F11k3_p859g!3m5!1s0x89c2598f1c7ed16f:0x60eb5f760963ed17!8m2!3d40.7266231!4d-73.9975583!16s%2Fg%2F11k3_p859g?entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D",
   },
   {
@@ -40,6 +40,29 @@ function addMarkers(spots) {
 }
 
 addMarkers(studySpots);
+
+/* ---------- circle section ---------- */
+const MILES_TO_METER = 1609;
+
+function milesToMeters(mi) {
+  return mi * MILES_TO_METER;
+}
+
+let centerMarker = null;
+let radiusCircle = null;
+
+const radiusInput = document.getElementById("radius");
+const radiusValue = document.getElementById("radiusValue");
+
+function getRadiusMiles() {
+  return Number(radiusInput.value);
+}
+
+function updateRadiusLabel() {
+  radiusValue.textContent = getRadiusMiles();
+}
+
+updateRadiusLabel();
 
 /* ---------- for debugging ----------- */
 // TODO comment these when pushing and submitting
