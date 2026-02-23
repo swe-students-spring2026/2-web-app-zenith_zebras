@@ -27,7 +27,7 @@ Our app helps students discover NYU study spaces through peer feedback, enabling
 cp .env.example .env
 
 # 2. Build and run containers
-docker-compose up --build
+docker-compose up --build -d
 
 ## Task boards
 
