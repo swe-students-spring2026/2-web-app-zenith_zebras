@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Post</title>
+</head>
+<body>
+    <h1>Create a Study Spot Post</h1>
+
+    {% if message %}
+        <p style="color: green;">{{ message }}</p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('create_post') }}">
+        <label for="netid">NetID:</label>
+        <input type="text" name="netid" id="netid" required><br><br>
+
+        <label for="location">Location:</label>
+        <input type="text" name="location" id="location" required><br><br>
+
+        <label for="googlemaps">Google Maps URL:</label>
+        <input type="text" name="googlemaps" id="googlemaps" required><br><br>
+
+        <label for="noise_level">Noise Level:</label>
+        <input type="text" name="noise_level" id="noise_level" required><br><br>
+
+        <label for="seating">Seating:</label>
+        <input type="text" name="seating" id="seating" required><br><br>
+
+        <label for="wifi">WiFi:</label>
+        <input type="text" name="wifi" id="wifi" required><br><br>
+
+        <label for="outlets">Outlets:</label>
+        <input type="text" name="outlets" id="outlets" required><br><br>
+
+        <label for="reservable">Reservable:</label>
+        <input type="text" name="reservable" id="reservable" required><br><br>
+
+        <label for="climate">Climate:</label>
+        <input type="text" name="climate" id="climate" required><br><br>
+
+        <label for="hours">Hours:</label>
+        <input type="text" name="hours" id="hours" required><br><br>
+
+        <button type="submit">Create Post</button>
+    </form>
+</body>
+</html>
