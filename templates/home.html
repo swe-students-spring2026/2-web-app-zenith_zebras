@@ -1,32 +1,35 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name = "viewport" content = "width=device-width, initial-scale=1" />
-        <title>HomePage</title>
-    </head>
-    <body>
-        <h1>HomePage</h1>
-        <div class="top-buttons">
-            <a href="{{ url_for('create_post') }}">Create Post</a>
-            <a href="{{ url_for('map_page') }}">Map</a>
-            <a href="{{ url_for('logout') }}">Log Out</a>
-        </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HomePage</title>
 
-        <form method="GET" action="{{url_for('search') }}">
-            <input typ="text" name="q" placeholder = "Search By Name">
-            <button type ="submit">Search</button>
-        </form>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  </head>
 
-        <div class="places">
-            {% for place in places %}
-                <div class="place-card">
-                    <a href="{{ url_for('place_detail', place_id=place.id)}}">
-                        <h3>{{ place.name }}</h3>
-                        <p>{{ place.location }}</p>
-                    </a>    
-                </div>
-            {% endfor %}
-        </div>
-    </body>
+  <body>
+    <div class="phone">
+      <h1 class="title">HomePage</h1>
+
+      <div class="top-buttons">
+        <a class="btn" href="{{ url_for('create_post') }}">Create<br>Post</a>
+        <a class="btn" href="{{ url_for('map_page') }}">Map</a>
+        <a class="btn" href="{{ url_for('logout') }}">Log<br>Out</a>
+      </div>
+
+      <form class="search" method="GET" action="{{ url_for('home') }}">
+        <input class="search-input" type="text" name="q" placeholder="Search By Name" value="{{ q or '' }}">
+      </form>
+
+      <div class="places">
+        {% for post in posts %}
+          <div class="place-card">
+            <div class="place-name">{{ post.place_name }}</div>
+            <div class="place-loc">{{ post.location }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
 </html>

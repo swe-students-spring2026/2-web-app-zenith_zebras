@@ -23,5 +23,75 @@ users_collection = db.users
 
 app = Flask(__name__)
 
+# This is temparary until we implement auth, so we can use url_for() in templates without crashing
+@app.get("/")
+def root():
+    return render_template("home.html")
+
+# ---------------
+# Auth guard
+# ---------------
+
+
+# ---------------
+# landing
+# ---------------
+
+
+# ---------------
+# Login / Signup
+# ---------------
+
+# -----------------------
+# Placeholder routes so url_for() won't crash
+# -----------------------
+
+@app.get("/create")
+def create_post():
+    return "<h1>Create Post Page (placeholder)</h1>"
+
+@app.get("/map")
+def map_page():
+    return "<h1>Map Page (placeholder)</h1>"
+
+@app.get("/logout")
+def logout():
+    return redirect(url_for("root"))
+
+# ---------------
+# Home Page
+# ---------------
+@app.get("/home")
+#@login_required
+def home():
+    #Search Querey
+    q = request.args.get("q", "").strip()
+
+    query = {}
+    if q:
+        # I have no idea what the database schema so adjust field name as needed
+        query = {"place_name": {"$regex": q, "$options": "i"}}
+
+    #show newest first
+    posts = list(posts_collection.find(query).sort("created_at", -1).limit(50))
+    for p in posts:
+        p["_id"] = str(p["_id"])
+    return render_template("home.html", posts=posts, q=q)
+
+# ---------------
+# Create Post
+# ---------------
+
+
+# ---------------
+# Post Details
+# ---------------
+
+
+# ---------------
+# Map Page
+# ---------------
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
