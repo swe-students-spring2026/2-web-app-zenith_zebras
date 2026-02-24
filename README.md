@@ -40,4 +40,6 @@ docker-compose up --build -d
 
 ## Task boards
 
+[Task Board](https://github.com/orgs/swe-students-spring2026/projects/3)
+
 See instructions. Delete this line and place a link to the task boards here.
