@@ -91,7 +91,7 @@ def login():
             login_user(user)
             return redirect(url_for("home"))
 
-        return render_template("login.html", error="Invalid email or password.")
+        return render_template("login.html", message="Invalid email or password.")
 
     return render_template("login.html")
 
@@ -151,6 +151,7 @@ def signup():
 
 @app.get("/logout")
 def logout():
+    logout_user()
     return redirect(url_for("root"))
 
 # ---------------
@@ -239,7 +240,8 @@ def edit_post(post_id):
             "hours": request.form.get("hours")
         }
         posts_collection.update_one({"_id": ObjectId(post_id)}, {"$set": updated_data})
-        return render_template("edit_post.html", post=updated_data, message="Post updated successfully!")
+        updated_post = posts_collection.find_one({"_id": ObjectId(post_id)})
+        return render_template("edit_post.html", post=updated_post, message="Post updated successfully!")
     return render_template("edit_post.html", post=post)
 
 # ---------------
