@@ -32,14 +32,13 @@ Our app helps students discover NYU study spaces through peer feedback, enabling
 
 ## Steps necessary to run the software
 
-# 1. Copy environment file
+### 1. Copy environment file
 cp .env.example .env
 
-# 2. Build and run containers
+### 2. Build and run containers
 docker-compose up --build -d
 
 ## Task boards
 
 [Task Board](https://github.com/orgs/swe-students-spring2026/projects/3)
-
-See instructions. Delete this line and place a link to the task boards here.
+[Issues Page](https://github.com/swe-students-spring2026/2-web-app-zenith_zebras/issues)
