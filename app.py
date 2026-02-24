@@ -1,4 +1,12 @@
 from flask import Flask, request, jsonify, redirect, url_for, render_template
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    login_required,
+    logout_user,
+    current_user
+)
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import datetime
@@ -24,6 +32,33 @@ users_collection = db.users
 
 app = Flask(__name__)
 
+app.secret_key = os.getenv("SECRET_KEY")
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"  # where to redirect if not logged in
+
+# -----------------------
+# User Model
+# -----------------------
+
+class User(UserMixin):
+    def __init__(self, user_data):
+        self.id = str(user_data["_id"])
+        self.email = user_data["email"]
+        self.netid = user_data["netid"]
+
+# -----------------------
+# User Loader
+# -----------------------
+
+@login_manager.user_loader
+def load_user(user_id):
+    user_data = users_collection.find_one({"_id": ObjectId(user_id)})
+    if user_data:
+        return User(user_data)
+    return None
+
 # This is temparary until we implement auth, so we can use url_for() in templates without crashing
 @app.get("/")
 def root():
@@ -40,8 +75,26 @@ def root():
 
 
 # ---------------
-# Login / Signup
+# Login 
 # ---------------
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        user_data = users_collection.find_one({"email": email})
+
+        if user_data and user_data["password"] == password:
+            user = User(user_data)
+            login_user(user)
+            return redirect(url_for("home"))
+
+        return render_template("login.html", error="Invalid email or password.")
+
+    return render_template("login.html")
+
 # ---------------
 # Signup
 # ---------------
