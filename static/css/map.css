@@ -1,0 +1,46 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+#app {
+  height: 100%;
+}
+#map {
+  height: 100%;
+}
+
+#toolbar {
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  font-size: 12pt;
+}
+
+#home-link {
+  background-color: grey;
+}
+
+#home-btn {
+  width: 92px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #d9d9d9;
+  border: 1px solid #cfcfcf;
+
+  color: #111;
+  text-decoration: none;
+  text-align: center;
+
+  font-size: 14px;
+  line-height: 1.1;
+}
+
+#home-btn:active {
+  transform: translateY(1px);
+}
