@@ -56,13 +56,7 @@ function addMarkers(spots) {
 }
 
 // Backup
-if (!studySpotsFromDB || studySpots.length === 0) {
-  console.log("adding data form db");
-  addMarkers(studySpotsFromDB);
-} else {
-  console.log("failing to add data from db");
-  addMarkers(studySpots);
-}
+addMarkers(studySpots);
 
 /* ---------- circle section ---------- */
 const MILES_TO_METER = 1609;
@@ -89,10 +83,10 @@ updateRadiusLabel();
 
 /* ---------- for debugging ----------- */
 // TODO comment these when pushing and submitting
-function onMapClick(e) {
-  const latlng = e.latlng;
-  console.log(`[${latlng.lat}, ${latlng.lng}]`);
-}
+// function onMapClick(e) {
+//   const latlng = e.latlng;
+//   console.log(`[${latlng.lat}, ${latlng.lng}]`);
+// }
 
-map.on("click", onMapClick);
+// map.on("click", onMapClick);
 /* ---------- for debugging ----------- */

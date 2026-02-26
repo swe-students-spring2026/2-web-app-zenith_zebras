@@ -255,12 +255,12 @@ def delete_post(post_id):
 # ---------------
 @app.get("/map")
 def map_page():
-    posts = list(posts_collection.find({}, {"location": 1, "googlemaps": 1, "_id": 1}))
-    print(posts)
-    for p in posts:
-        p["_id"] = str(p["_id"])
-    print(posts)
-    return render_template("map.html", posts=posts)
+    # posts = list(posts_collection.find({}, {"location": 1, "googlemaps": 1, "_id": 1}))
+    # print(posts)
+    # for p in posts:
+    #     p["_id"] = str(p["_id"])
+    # print(posts)
+    return render_template("map.html")
 
 
 
