@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up</title>
+    <title>Log In</title>
 </head>
 <body>
 
-    <h1>Sign Up</h1>
+    <h1>Log In</h1>
 
     {% if message %}
         <p style="color: red;">{{ message }}</p>
@@ -22,16 +22,12 @@
         <input type="password" name="password" id="password" required>
         <br><br>
 
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" name="confirm_password" id="confirm_password" required>
-        <br><br>
-
         <p>
-            Have an account?
-            <a href="{{ url_for('login') }}">Log In</a>
+            Don't have an account?
+            <a href="{{ url_for('signup') }}">Create an Account</a>
         </p>
 
-        <button type="submit">Submit</button>
+        <button type="submit">Confirm</button>
 
     </form>
 

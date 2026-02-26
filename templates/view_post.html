@@ -16,6 +16,7 @@
     <p><strong>Reservable:</strong> {{ post.reservable }}</p>
     <p><strong>Climate:</strong> {{ post.climate }}</p>
     <p><strong>Hours:</strong> {{ post.hours }}</p>
+    <p><strong>Created On:</strong> {{ post.created_at }}</p>
 
     <a href="{{ url_for('edit_post', post_id=post._id) }}">
         <button type="button">Edit Post</button>

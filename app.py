@@ -1,4 +1,12 @@
 from flask import Flask, request, jsonify, redirect, url_for, render_template
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    login_required,
+    logout_user,
+    current_user
+)
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import datetime
@@ -24,6 +32,33 @@ users_collection = db.users
 
 app = Flask(__name__)
 
+app.secret_key = os.getenv("SECRET_KEY")
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"  # where to redirect if not logged in
+
+# -----------------------
+# User Model
+# -----------------------
+
+class User(UserMixin):
+    def __init__(self, user_data):
+        self.id = str(user_data["_id"])
+        self.email = user_data["email"]
+        self.netid = user_data["netid"]
+
+# -----------------------
+# User Loader
+# -----------------------
+
+@login_manager.user_loader
+def load_user(user_id):
+    user_data = users_collection.find_one({"_id": ObjectId(user_id)})
+    if user_data:
+        return User(user_data)
+    return None
+
 # This is temparary until we implement auth, so we can use url_for() in templates without crashing
 @app.get("/")
 def root():
@@ -40,8 +75,26 @@ def root():
 
 
 # ---------------
-# Login / Signup
+# Login 
 # ---------------
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        user_data = users_collection.find_one({"email": email})
+
+        if user_data and user_data["password"] == password:
+            user = User(user_data)
+            login_user(user)
+            return redirect(url_for("home"))
+
+        return render_template("login.html", error="Invalid email or password.")
+
+    return render_template("login.html")
+
 # ---------------
 # Signup
 # ---------------
@@ -111,8 +164,7 @@ def home():
 
     query = {}
     if q:
-        # I have no idea what the database schema so adjust field name as needed
-        query = {"place_name": {"$regex": q, "$options": "i"}}
+        query = {"location": {"$regex": q, "$options": "i"}}
 
     #show newest first
     posts = list(posts_collection.find(query).sort("created_at", -1).limit(50))
@@ -145,11 +197,27 @@ def create_post():
             "wifi": request.form.get("wifi"),
             "outlets": request.form.get("outlets"),
             "reservable": request.form.get("reservable"),
-            "hours": request.form.get("hours")
+            "climate": request.form.get("climate"),
+            "hours": request.form.get("hours"),
+            "created_at": datetime.datetime.utcnow()
         }
-        posts_collection.insert_one(post_data)
-        return render_template("create_post.html", message="Post created successfully!")
-    return render_template("create_post.html")
+
+        result = posts_collection.insert_one(post_data)
+        return redirect(url_for("view_post", post_id=result.inserted_id))
+    empty_post = {
+        "netid": "",
+        "location": "",
+        "googlemaps": "",
+        "noise_level": "",
+        "seating": "",
+        "wifi": "",
+        "outlets": "",
+        "reservable": "",
+        "climate": "",
+        "hours": ""
+    }
+
+    return render_template("create_post.html", post=empty_post)
 
 # ---------------
 # Edit Post
@@ -190,7 +258,7 @@ def map_page():
     posts = list(posts_collection.find({}, {"location": 1, "googlemaps": 1, "_id": 1}))
     print(posts)
     for p in posts:
-        p["_id"] = str(p["id"])
+        p["_id"] = str(p["_id"])
     print(posts)
     return render_template("map.html", posts=posts)
 
