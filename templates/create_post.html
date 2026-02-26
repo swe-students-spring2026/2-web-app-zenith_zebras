@@ -3,74 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Create a Post</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_post.css') }}">
 </head>
+
 <body>
+    <main class="app">
+        <header class="header">
+            <h1 class="page-title">Create a Post</h1>
+        </header>
 
-<h1>Create a Post</h1>
+        <form class="form" method="POST" action="{{ url_for('create_post') }}">
+            <input class="input input-big" type="text" name="location" id="location" placeholder="Name of Place" required>
 
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
+            <input class="input input-big" type="text" name="googlemaps" id="googlemaps" placeholder="Link to google maps" required>
 
-<form method="POST">
+            <div class="choice-row">
+                <input class="choice" type="radio" name="seating" id="seat_silent" value="Silent Study" required>
+                <label class="choice-box" for="seat_silent">Silent<br>Study</label>
 
-    <p>
-        <label>NetID:</label><br>
-        <input type="text" name="netid" required>
-    </p>
+                <input class="choice" type="radio" name="seating" id="seat_quiet" value="Quiet Pair" required>
+                <label class="choice-box" for="seat_quiet">Quiet<br>Pair</label>
 
-    <p>
-        <label>Name of Place:</label><br>
-        <input type="text" name="location" required>
-    </p>
+                <input class="choice" type="radio" name="seating" id="seat_group" value="Fit for Group" required>
+                <label class="choice-box" for="seat_group">Fit for<br>Group</label>
+            </div>
 
-    <p>
-        <label>Google Maps URL:</label><br>
-        <input type="text" name="googlemaps" required>
-    </p>
+            <!-- Yes/No rows-->
+             <div class="yn-grid">
+                <div class="yn-label">Wifi-</div>
+                <input class="choice" type="radio" name="wifi" id="wifi_yes" value="Yes" required>
+                <label class="choice-box" for="wifi_yes">Yes</label>
+                <input class="choice" type="radio" name="wifi" id="wifi_no" value="No">
+                <label class="choice-box" for="wifi_no">No</label>
 
-    <p>
-        <label>Noise Level:</label><br>
-        <input type="radio" name="noise_level" value="Silent Study" required> Silent Study<br>
-        <input type="radio" name="noise_level" value="Quiet Pair"> Quiet Pair<br>
-        <input type="radio" name="noise_level" value="Fit for Group"> Fit for Group
-    </p>
+                <div class="yn-label">Outlets-</div>
+                <input class="choice" type="radio" name="outlets" id="outlets_yes" value="Yes" required>
+                <label class="choice-box" for="outlets_yes">Yes</label>
+                <input class="choice" type="radio" name="outlets" id="outlets_no" value="No">
+                <label class="choice-box" for="outlets_no">No</label>
 
-    <p>
-        <label>WiFi:</label><br>
-        <input type="radio" name="wifi" value="Yes" required> Yes<br>
-        <input type="radio" name="wifi" value="No"> No
-    </p>
+                <div class="yn-label">Reservable-</div>
+                <input class="choice" type="radio" name="reservable" id="reservable_yes" value="Yes" required>
+                <label class="choice-box" for="reservable_yes">Yes</label>
+                <input class="choice" type="radio" name="reservable" id="reservable_no" value="No">
+                <label class="choice-box" for="reservable_no">No</label>
+            </div>
 
-    <p>
-        <label>Outlets:</label><br>
-        <input type="radio" name="outlets" value="Yes" required> Yes<br>
-        <input type="radio" name="outlets" value="No"> No
-    </p>
+            <!-- Climate row -->
+            <div class="hours-grid">
+                <div class="hours-label">Hours</div>
 
-    <p>
-        <label>Reservable:</label><br>
-        <input type="radio" name="reservable" value="Yes" required> Yes<br>
-        <input type="radio" name="reservable" value="No"> No
-    </p>
+                <input class="input hours-input" type="text" name="hours" placeholder="Open from-Open to" required>
+            </div>
 
-    <p>
-        <label>Climate:</label><br>
-        <input type="text" name="climate" required>
-    </p>
+            <!-- Hours row -->
+            <div class="climate-grid">
+                <div class="climate-label">Climate</div>
 
-    <p>
-        <label>Hours:</label><br>
-        <input type="text" name="hours" required>
-    </p>
+                <input class="input climate-input" type="text" name="climates" placeholder="Sunny/Windy" required>
+            </div>
 
-    <button type="submit">Create Post</button>
+            <button class="finish" type="submit">Create Post</button>
 
-</form>
-
-<br>
-
-<button tye = "submit"><a href="{{ url_for('home') }}" style="color:black;text-decoration: none;">Back to Home</a></button>
-
+        </form>
+    </main>
 </body>
 </html>

@@ -1,0 +1,132 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Make the first two inputs big boxes */
+.input-big {
+  min-height: 64px;
+  font-size: 22px;
+  text-align: center;
+  padding: 0 12px;
+}
+
+/* Hide native radio inputs, use label as button */
+.choice {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.choice-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* grey clickable blocks */
+.choice-box {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: #d9d9d9;
+  border: 1px solid #cfcfcf;
+  border-radius: var(--radius);
+
+  font-size: 14px;
+  line-height: 1.1;
+  user-select: none;
+}
+
+/* selected state */
+.choice:checked + .choice-box {
+  border: 2px solid #111;
+  background: #e6e6e6;
+}
+
+/* Yes/No grid */
+.yn-grid {
+  display: grid;
+  grid-template-columns: 90px 1fr 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.yn-label {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  background: #fff;
+}
+
+/* Hours row */
+.hours-grid {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.hours-label {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  background: #fff;
+}
+
+.hours-input {
+  min-height: 60px;
+  text-align: center;
+}
+
+/* shared select style */
+.select {
+  width: 100%;
+  min-height: 48px;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 0 10px;
+  font-size: 16px;
+  background: #fff;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 13px;
+  color: #333;
+}
+
+/* Final submit button */
+.finish {
+  min-height: 64px;
+  border-radius: var(--radius);
+  border: 1px solid #cfcfcf;
+  background: #d9d9d9;
+  font-size: 22px;
+  font-weight: 500;
+}
