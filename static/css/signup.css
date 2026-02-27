@@ -1,0 +1,41 @@
+.signup_form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Labels */
+.signup_label {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Make the first three inputs big boxes */
+.signup_input {
+  min-height: 64px;
+  font-size: 22px;
+  text-align: center;
+  padding: 0 12px;
+}
+
+/* Error message */
+.signup_error {
+  font-size: 14px;
+  color: #c00000;
+}
+
+/* Submit button */
+.signup_button {
+  min-height: 64px;
+  border-radius: var(--radius);
+  border: 1px solid #cfcfcf;
+  background: #d9d9d9;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+/* Bottom link section */
+.signup_footer {
+  margin-top: 18px;
+  font-size: 14px;
+}

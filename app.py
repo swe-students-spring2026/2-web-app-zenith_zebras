@@ -70,6 +70,10 @@ def load_user(user_id):
     return None
 
 # This is temparary until we implement auth, so we can use url_for() in templates without crashing
+
+# the root page should redirect to home page
+# the authentification logic to check if the user is logged in or not
+# and furthur redirect to login / sign up page should be verified on the home page
 @app.get("/")
 def root():
     return redirect(url_for("home"))
@@ -99,7 +103,8 @@ def login():
         if user_data and user_data["password"] == password:
             user = User(user_data)
             login_user(user)
-            return redirect(url_for("home"))
+            next_page = request.args.get("next")
+            return redirect(next_page or url_for("home"))
 
         return render_template("login.html", message="Invalid email or password.")
 
@@ -197,12 +202,6 @@ def signup():
 
     return render_template("signup.html")
 
-# -----------------------
-# Placeholder routes so url_for() won't crash
-# -----------------------
-# @app.get("/map")
-# def map_page():
-#     return "<h1>Map Page (placeholder)</h1>"
 
 @app.get("/logout")
 def logout():
@@ -212,6 +211,9 @@ def logout():
 # ---------------
 # Home Page
 # ---------------
+
+# TODO when get request sent, should check if logged in, if not redirect to login / sign up
+
 @app.get("/home")
 @login_required
 def home():
@@ -508,9 +510,12 @@ def map_page():
     posts = list(posts_collection.find({}, {"location": 1, "googlemaps": 1, "_id": 1}))
     for p in posts:
         p["_id"] = str(p["_id"])
+        link = p.get("googlemaps", "")
+        if isinstance(link, str):
+            parsed = re.search(r'@(-?\d+\.?\d*),(-?\d+\.?\d*)', link)
+            if parsed:
+                p["latlng"] = {"lat": float(parsed.group(1)), "lng": float(parsed.group(2))}
     return render_template("map.html", posts=posts)
-
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

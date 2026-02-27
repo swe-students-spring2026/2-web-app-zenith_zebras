@@ -2,21 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>HomePage</title>
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
   </head>
 
   <body>
-    <div class="phone">
-      <h1 class="title">HomePage</h1>
+    <main class="app">
+      <header class="header">
+        <h1 class="page-title">HomePage</h1>
+      </header>
 
-      <div class="top-buttons">
+      <nav class="top-buttons">
         <a class="btn" href="{{ url_for('create_post') }}">Create<br>Post</a>
         <a class="btn" href="{{ url_for('map_page') }}">Map</a>
         <a class="btn" href="{{ url_for('logout') }}">Log<br>Out</a>
-      </div>
+      </nav>
 
       <form class="search" method="GET" action="{{ url_for('home') }}">
         <input
@@ -76,7 +79,7 @@
         <button type="submit" class="btn">Apply</button>
       </form>
 
-      <div class="places">
+      <section class="places">
         {% for post in posts %}
           <a
             href="{{ url_for('view_post', post_id=post._id) }}"
@@ -87,7 +90,7 @@
             <div class="place-loc">{{ post.hours }}</div>
           </a>
         {% endfor %}
-      </div>
-    </div>
+      </section>
+    </main>
   </body>
 </html>

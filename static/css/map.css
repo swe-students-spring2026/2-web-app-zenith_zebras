@@ -3,11 +3,17 @@ body {
   height: 100%;
   margin: 0;
 }
-#app {
-  height: 100%;
+
+#map-page {
+  display: flex;
+  flex-direction: column;
+  flex-direction: 100svh;
+  max-width: none;
 }
+
 #map {
-  height: 100%;
+  flex: 1;
+  margin-top: 16px;
 }
 
 #toolbar {
@@ -16,7 +22,7 @@ body {
   align-items: center;
   gap: 12px;
   text-align: center;
-  font-size: 12pt;
+  font-size: 15pt;
 }
 
 #home-link {
@@ -32,12 +38,13 @@ body {
 
   background: #d9d9d9;
   border: 1px solid #cfcfcf;
+  border-radius: var(--radius);
 
   color: #111;
   text-decoration: none;
   text-align: center;
 
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.1;
 }
 

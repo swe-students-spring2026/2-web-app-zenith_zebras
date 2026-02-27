@@ -1,0 +1,89 @@
+/* ===== Base reset ===== */
+* { box-sizing: border-box; }
+
+:root {
+  /* Keep these identical so all pages match */
+  --pad: 16px;
+  --radius: 14px;
+  --border: 1px solid #111;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f6f6f6;
+  color: #111;
+}
+
+/* ===== Main app container ===== */
+.app {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+
+  min-height: 100svh;
+  background: #fff;
+
+  padding:
+    calc(env(safe-area-inset-top) + var(--pad))
+    var(--pad)
+    calc(env(safe-area-inset-bottom) + var(--pad));
+}
+
+/* ===== Simple header area ===== */
+.header {
+  margin-bottom: 12px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ===== Shared form controls ===== */
+.input {
+  width: 100%;
+  min-height: 48px;
+  border: var(--border);
+  border-radius: var(--radius);
+
+  padding: 0 12px;
+  font-size: 16px; /* prevents iOS zoom */
+  outline: none;
+}
+
+/* ===== Shared list + card system ===== */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  min-height: 76px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: underline;
+  margin-bottom: 8px;
+}
+
+.card-subtitle {
+  font-size: 13px;
+  color: #333;
+}
+
+/* Desktop preview only */
+@media (min-width: 520px) {
+  .app {
+    margin: 28px auto;
+    border-radius: 18px;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.12);
+  }
+}

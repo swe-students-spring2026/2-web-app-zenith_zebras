@@ -10,12 +10,13 @@
             integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
             crossorigin />
         <link rel="stylesheet" href="../static/css/map.css" />
+        <link rel="stylesheet" href="../static/css/app.css" />
     </head>
     <body>
-        <div id="app">
+        <main class="app" id="map-page">
             <div id="toolbar">
                 <div>
-                    <a id="home-btn" href="/home">Home</a>
+                    <a id="home-btn" href="/">Home</a>
                 </div>
                 <!-- TODO the range tool is not quite working yet
                 <span class="label">Radius: </span>
@@ -27,16 +28,16 @@
                 -->
             </div>
             <div id="map"></div>
-        </div>
 
-        <script
-            src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-            crossorigin></script>
-        <script>
-            const studySpotsFromDB = {{ posts }};
+            <script
+                src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+                crossorigin></script>
+            <script>
+            const posts = {{ posts | tojson }} 
         </script>
-        <script
-            src="../static/script/map.js"></script>
+            <script
+                src="../static/script/map.js"></script>
+        </main>
     </body>
 </html>

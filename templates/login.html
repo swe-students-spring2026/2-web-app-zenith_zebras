@@ -3,33 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Log In</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
+    <div class="app">
 
-    <h1>Log In</h1>
+    <div class="header">
+    <h1 class="page-title">Log In</h1>
+    </div>
 
-    {% if message %}
-        <p style="color: red;">{{ message }}</p>
+    {% if error %}
+        <p class="login_error">{{ error }}</p>
     {% endif %}
 
-    <form method="POST">
+    <form method="POST" class="login_form">
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
-        <br><br>
+    <div>
+        <label for="email" class="login_label">Email</label>
+        <input type="email"
+               name="email"
+               id="email"
+               class="input login_input"
+               required>
+    </div>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        <br><br>
+    <div>
+        <label for="password" class="login_label">Password</label>
+        <input type="password"
+               name="password"
+               id="password"
+               class="input login_input"
+               required>
+    </div>
 
-        <p>
-            Don't have an account?
-            <a href="{{ url_for('signup') }}">Create an Account</a>
-        </p>
-
-        <button type="submit">Confirm</button>
+    <button type="submit" class="login_button">
+        Log In
+    </button>
 
     </form>
 
+    <div class="login_footer">
+        Don’t have an account?
+        <a href="{{ url_for('signup') }}">Create an Account</a>
+    </div>
+
+    </div>
 </body>
 </html>
