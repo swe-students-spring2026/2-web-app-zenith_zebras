@@ -66,11 +66,7 @@ def load_user(user_id):
 # and furthur redirect to login / sign up page should be verified on the home page
 @app.get("/")
 def root():
-<<<<<<< HEAD
     return render_template("login.html")
-=======
-    return redirect('/home')
->>>>>>> 113e9979451c02b6e88e4a1220a5db9ec1b0d082
 
 # ---------------
 # Auth guard
