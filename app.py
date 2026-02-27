@@ -60,9 +60,13 @@ def load_user(user_id):
     return None
 
 # This is temparary until we implement auth, so we can use url_for() in templates without crashing
+
+# the root page should redirect to home page
+# the authentification logic to check if the user is logged in or not
+# and furthur redirect to login / sign up page should be verified on the home page
 @app.get("/")
 def root():
-    return render_template("home.html")
+    return redirect('/home')
 
 # ---------------
 # Auth guard
@@ -150,6 +154,9 @@ def logout():
 # ---------------
 # Home Page
 # ---------------
+
+# TODO when get request sent, should check if logged in, if not redirect to login / sign up
+
 @app.get("/home")
 #@login_required
 def home():
