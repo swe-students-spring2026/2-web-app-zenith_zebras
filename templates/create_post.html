@@ -8,60 +8,129 @@
 
 <h1>Create a Post</h1>
 
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
-
 <form method="POST">
 
     <p>
         <label>NetID:</label><br>
-        <input type="text" name="netid" required>
+        <input type="text" name="netid" value="{{ post.netid }}" required>
     </p>
 
     <p>
         <label>Name of Place:</label><br>
-        <input type="text" name="location" required>
+        <input type="text" name="location" value="{{ post.location }}" required>
     </p>
 
     <p>
         <label>Google Maps URL:</label><br>
-        <input type="text" name="googlemaps" required>
+        <input type="text" name="googlemaps" value="{{ post.googlemaps }}" required>
+        {% if error_googlemaps %}
+            <br><span style="color: red;">{{ error_googlemaps }}</span>
+        {% endif %}
     </p>
 
     <p>
         <label>Noise Level:</label><br>
-        <input type="radio" name="noise_level" value="Silent Study" required> Silent Study<br>
-        <input type="radio" name="noise_level" value="Quiet Pair"> Quiet Pair<br>
-        <input type="radio" name="noise_level" value="Fit for Group"> Fit for Group
+        <input
+            type="radio"
+            name="noise_level"
+            value="Silent Study"
+            {% if post.noise_level == "Silent Study" %}checked{% endif %}
+            required
+        > Silent Study<br>
+        <input
+            type="radio"
+            name="noise_level"
+            value="Quiet Pair"
+            {% if post.noise_level == "Quiet Pair" %}checked{% endif %}
+        > Quiet Pair<br>
+        <input
+            type="radio"
+            name="noise_level"
+            value="Fit for Group"
+            {% if post.noise_level == "Fit for Group" %}checked{% endif %}
+        > Fit for Group
     </p>
 
     <p>
         <label>WiFi:</label><br>
-        <input type="radio" name="wifi" value="Yes" required> Yes<br>
-        <input type="radio" name="wifi" value="No"> No
+        <input
+            type="radio"
+            name="wifi"
+            value="Yes"
+            {% if post.wifi == "Yes" %}checked{% endif %}
+            required
+        > Yes<br>
+        <input
+            type="radio"
+            name="wifi"
+            value="No"
+            {% if post.wifi == "No" %}checked{% endif %}
+        > No
     </p>
 
     <p>
         <label>Outlets:</label><br>
-        <input type="radio" name="outlets" value="Yes" required> Yes<br>
-        <input type="radio" name="outlets" value="No"> No
+        <input
+            type="radio"
+            name="outlets"
+            value="Yes"
+            {% if post.outlets == "Yes" %}checked{% endif %}
+            required
+        > Yes<br>
+        <input
+            type="radio"
+            name="outlets"
+            value="No"
+            {% if post.outlets == "No" %}checked{% endif %}
+        > No
     </p>
 
     <p>
         <label>Reservable:</label><br>
-        <input type="radio" name="reservable" value="Yes" required> Yes<br>
-        <input type="radio" name="reservable" value="No"> No
+        <input
+            type="radio"
+            name="reservable"
+            value="Yes"
+            {% if post.reservable == "Yes" %}checked{% endif %}
+            required
+        > Yes<br>
+        <input
+            type="radio"
+            name="reservable"
+            value="No"
+            {% if post.reservable == "No" %}checked{% endif %}
+        > No
     </p>
 
     <p>
         <label>Climate:</label><br>
-        <input type="text" name="climate" required>
+        <input list="climateOptions" name="climate" value="{{ post.climate }}" required>
+        <datalist id="climateOptions">
+            <option value="Cool / Air‑conditioned"></option>
+            <option value="Comfortable"></option>
+            <option value="Warm"></option>
+            <option value="Varies"></option>
+        </datalist>
     </p>
 
     <p>
-        <label>Hours:</label><br>
-        <input type="text" name="hours" required>
+        <label>Hours (24-hour range):</label><br>
+        <select name="hours_start" required>
+            <option value="">Start</option>
+            {% for h in hours_options %}
+                <option value="{{ h }}" {% if post.hours_start == h %}selected{% endif %}>{{ h }}</option>
+            {% endfor %}
+        </select>
+        &nbsp;to&nbsp;
+        <select name="hours_end" required>
+            <option value="">End</option>
+            {% for h in hours_options %}
+                <option value="{{ h }}" {% if post.hours_end == h %}selected{% endif %}>{{ h }}</option>
+            {% endfor %}
+        </select>
+        {% if error_hours %}
+            <br><span style="color: red;">{{ error_hours }}</span>
+        {% endif %}
     </p>
 
     <button type="submit">Create Post</button>

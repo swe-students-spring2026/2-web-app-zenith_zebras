@@ -8,6 +8,10 @@ services:
       - "27017:27017"
     env_file:
       - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DBNAME}
     volumes:
       - mongo_data:/data/db
 
@@ -15,7 +19,7 @@ services:
     build: .
     container_name: study_spots_app
     ports:
-      - "5000:5000"
+      - "5001:5000"
     env_file:
       - .env
     depends_on:

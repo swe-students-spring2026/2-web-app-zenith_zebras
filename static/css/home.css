@@ -69,6 +69,22 @@ body {
   outline: none;
 }
 
+/* Filters row */
+.filters {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.filters select,
+.filters input[type="text"] {
+  flex: 1 1 48%;
+  min-width: 150px;
+  height: 30px;
+  font-size: 12px;
+}
+
 /* future Search button */
 .search-btn {
   margin-top: 8px;
@@ -90,6 +106,7 @@ body {
   border: 1px solid #111;
   padding: 10px 10px 12px;
   min-height: 70px;
+  cursor: pointer;
 }
 
 .place-name {
