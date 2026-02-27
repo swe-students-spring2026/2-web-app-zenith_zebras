@@ -22,73 +22,15 @@
       </nav>
 
       <form class="search" method="GET" action="{{ url_for('home') }}">
-        <input
-          class="search-input"
-          type="text"
-          name="q"
-          placeholder="Search By Name"
-          value="{{ q or '' }}"
-        >
-
-        <div class="filters">
-          <select name="noise_level">
-            <option value="">Noise (Any)</option>
-            <option value="Silent Study" {% if noise_level == "Silent Study" %}selected{% endif %}>Silent Study</option>
-            <option value="Quiet Pair" {% if noise_level == "Quiet Pair" %}selected{% endif %}>Quiet Pair</option>
-            <option value="Fit for Group" {% if noise_level == "Fit for Group" %}selected{% endif %}>Fit for Group</option>
-          </select>
-
-          <select name="wifi">
-            <option value="">Wi‑Fi (Any)</option>
-            <option value="Yes" {% if wifi == "Yes" %}selected{% endif %}>Yes</option>
-            <option value="No" {% if wifi == "No" %}selected{% endif %}>No</option>
-          </select>
-
-          <select name="outlets">
-            <option value="">Outlets (Any)</option>
-            <option value="Yes" {% if outlets == "Yes" %}selected{% endif %}>Yes</option>
-            <option value="No" {% if outlets == "No" %}selected{% endif %}>No</option>
-          </select>
-
-          <select name="reservable">
-            <option value="">Reservable (Any)</option>
-            <option value="Yes" {% if reservable == "Yes" %}selected{% endif %}>Yes</option>
-            <option value="No" {% if reservable == "No" %}selected{% endif %}>No</option>
-          </select>
-
-          <div style="display: flex; flex-direction: column; gap: 4px; width: 100%;">
-            <span style="font-size: 11px; color: #555;">Filter by hours</span>
-            <div style="display: flex; gap: 6px; width: 100%;">
-              <select name="hours_start" style="flex: 1;">
-                <option value="">Start</option>
-                {% for h in hours_options %}
-                  <option value="{{ h }}" {% if hours_start == h %}selected{% endif %}>{{ h }}</option>
-                {% endfor %}
-              </select>
-
-              <select name="hours_end" style="flex: 1;">
-                <option value="">End</option>
-                {% for h in hours_options %}
-                  <option value="{{ h }}" {% if hours_end == h %}selected{% endif %}>{{ h }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" class="btn">Apply</button>
+        <input class="search-input" type="text" name="q" placeholder="Search By Name" value="{{ q or '' }}">
       </form>
 
       <section class="places">
         {% for post in posts %}
-          <a
-            href="{{ url_for('view_post', post_id=post._id) }}"
-            class="place-card"
-            style="text-decoration: none; color: inherit;"
-          >
-            <div class="place-name">{{ post.location }}</div>
-            <div class="place-loc">{{ post.hours }}</div>
-          </a>
+          <div class="place-card">
+            <div class="place-name">{{ post.place_name }}</div>
+            <div class="place-loc">{{ post.location }}</div>
+          </div>
         {% endfor %}
       </section>
     </main>

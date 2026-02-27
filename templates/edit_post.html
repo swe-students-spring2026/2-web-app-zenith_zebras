@@ -19,11 +19,7 @@
         <input type="text" name="location" id="location" value="{{ post.location }}" required><br><br>
 
         <label for="googlemaps">Google Maps URL:</label>
-        <input type="text" name="googlemaps" id="googlemaps" value="{{ post.googlemaps }}" required><br>
-        {% if error_googlemaps %}
-            <span style="color: red;">{{ error_googlemaps }}</span>
-        {% endif %}
-        <br><br>
+        <input type="text" name="googlemaps" id="googlemaps" value="{{ post.googlemaps }}" required><br><br>
 
         <label for="noise_level">Noise Level:</label>
         <input type="text" name="noise_level" id="noise_level" value="{{ post.noise_level }}" required><br><br>
@@ -41,33 +37,10 @@
         <input type="text" name="reservable" id="reservable" value="{{ post.reservable }}" required><br><br>
 
         <label for="climate">Climate:</label>
-        <input list="climateOptions" name="climate" id="climate" value="{{ post.climate }}" required><br><br>
+        <input type="text" name="climate" id="climate" value="{{ post.climate }}" required><br><br>
 
-        <datalist id="climateOptions">
-            <option value="Cool / Air‑conditioned"></option>
-            <option value="Comfortable"></option>
-            <option value="Warm"></option>
-            <option value="Varies"></option>
-        </datalist>
-
-        <label for="hours">Hours (24-hour range):</label><br>
-        <select name="hours_start" id="hours_start" required>
-            <option value="">Start</option>
-            {% for h in hours_options %}
-                <option value="{{ h }}" {% if post.hours_start == h %}selected{% endif %}>{{ h }}</option>
-            {% endfor %}
-        </select>
-        &nbsp;to&nbsp;
-        <select name="hours_end" id="hours_end" required>
-            <option value="">End</option>
-            {% for h in hours_options %}
-                <option value="{{ h }}" {% if post.hours_end == h %}selected{% endif %}>{{ h }}</option>
-            {% endfor %}
-        </select>
-        {% if error_hours %}
-            <br><span style="color: red;">{{ error_hours }}</span>
-        {% endif %}
-        <br><br>
+        <label for="hours">Hours:</label>
+        <input type="text" name="hours" id="hours" value="{{ post.hours }}" required><br><br>
 
         <button type="submit">Update Post</button>
     </form>
