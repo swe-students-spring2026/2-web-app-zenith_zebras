@@ -12,6 +12,7 @@ import datetime
 import os
 from dotenv import load_dotenv
 import re # for confirm email function, also for parsing google map link parsing
+from werkzeug.security import generate_password_hash, check_password_hash # for password hashing
 
 load_dotenv()
 
@@ -40,7 +41,6 @@ login_manager.login_view = "login"  # where to redirect if not logged in
 # -----------------------
 # User Model
 # -----------------------
-
 class User(UserMixin):
     def __init__(self, user_data):
         self.id = str(user_data["_id"])
@@ -50,7 +50,6 @@ class User(UserMixin):
 # -----------------------
 # User Loader
 # -----------------------
-
 @login_manager.user_loader
 def load_user(user_id):
     user_data = users_collection.find_one({"_id": ObjectId(user_id)})
@@ -71,7 +70,6 @@ def root():
 # ---------------
 # Login 
 # ---------------
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -79,8 +77,9 @@ def login():
         password = request.form.get("password")
 
         user_data = users_collection.find_one({"email": email})
-
-        if user_data and user_data["password"] == password:
+        
+        # if user_data and user_data["password"] == password:
+        if user_data and check_password_hash(user_data["password"], str(password)):
             user = User(user_data)
             login_user(user)
             next_page = request.args.get("next")
@@ -126,10 +125,13 @@ def signup():
 
         user_name = email.split("@")[0]
 
+        # hash the password for security
+        password_hash = generate_password_hash(str(password))
+
         users_collection.insert_one({
             "netid": user_name,
             "email": email,
-            "password": password,
+            "password": password_hash,
             "posts": []
         })
 
@@ -147,9 +149,6 @@ def logout():
 # ---------------
 # Home Page
 # ---------------
-
-# TODO when get request sent, should check if logged in, if not redirect to login / sign up
-
 @app.get("/home")
 @login_required
 def home():
