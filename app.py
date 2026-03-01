@@ -1,11 +1,10 @@
-from flask import Flask, request, jsonify, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template
 from flask_login import (
     LoginManager,
     UserMixin,
     login_user,
     login_required,
     logout_user,
-    current_user
 )
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -13,6 +12,7 @@ import datetime
 import os
 from dotenv import load_dotenv
 import re # for confirm email function, also for parsing google map link parsing
+from werkzeug.security import generate_password_hash, check_password_hash # for password hashing
 
 load_dotenv()
 
@@ -41,7 +41,6 @@ login_manager.login_view = "login"  # where to redirect if not logged in
 # -----------------------
 # User Model
 # -----------------------
-
 class User(UserMixin):
     def __init__(self, user_data):
         self.id = str(user_data["_id"])
@@ -51,7 +50,6 @@ class User(UserMixin):
 # -----------------------
 # User Loader
 # -----------------------
-
 @login_manager.user_loader
 def load_user(user_id):
     user_data = users_collection.find_one({"_id": ObjectId(user_id)})
@@ -59,8 +57,9 @@ def load_user(user_id):
         return User(user_data)
     return None
 
-# This is temparary until we implement auth, so we can use url_for() in templates without crashing
-
+# ---------------
+# Root
+# ---------------
 # the root page should redirect to home page
 # the authentification logic to check if the user is logged in or not
 # and furthur redirect to login / sign up page should be verified on the home page
@@ -69,19 +68,8 @@ def root():
     return redirect('/home')
 
 # ---------------
-# Auth guard
-# ---------------
-
-
-# ---------------
-# landing
-# ---------------
-
-
-# ---------------
 # Login 
 # ---------------
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -89,8 +77,9 @@ def login():
         password = request.form.get("password")
 
         user_data = users_collection.find_one({"email": email})
-
-        if user_data and user_data["password"] == password:
+        
+        # if user_data and user_data["password"] == password:
+        if user_data and check_password_hash(user_data["password"], str(password)):
             user = User(user_data)
             login_user(user)
             next_page = request.args.get("next")
@@ -136,10 +125,13 @@ def signup():
 
         user_name = email.split("@")[0]
 
+        # hash the password for security
+        password_hash = generate_password_hash(str(password))
+
         users_collection.insert_one({
             "netid": user_name,
             "email": email,
-            "password": password,
+            "password": password_hash,
             "posts": []
         })
 
@@ -148,18 +140,17 @@ def signup():
     return render_template("signup.html")
 
 
+@login_required
 @app.get("/logout")
 def logout():
+    logout_user()
     return redirect(url_for("root"))
 
 # ---------------
 # Home Page
 # ---------------
-
-# TODO when get request sent, should check if logged in, if not redirect to login / sign up
-
 @app.get("/home")
-#@login_required
+@login_required
 def home():
     #Search Querey
     q = request.args.get("q", "").strip()
@@ -178,6 +169,7 @@ def home():
 # View Post
 # ---------------
 @app.route("/posts/<post_id>")
+@login_required
 def view_post(post_id):
     post = posts_collection.find_one({"_id": ObjectId(post_id)})
     if not post:
@@ -188,6 +180,7 @@ def view_post(post_id):
 # Create Post
 # ---------------
 @app.route("/posts/create", methods=["GET", "POST"])
+@login_required
 def create_post():
     if request.method == "POST":
         post_data = {
@@ -225,6 +218,7 @@ def create_post():
 # Edit Post
 # ---------------
 @app.route("/posts/<post_id>/edit", methods=["GET", "POST"])
+@login_required
 def edit_post(post_id):
     post = posts_collection.find_one({"_id": ObjectId(post_id)})
     if request.method == "POST":
@@ -248,6 +242,7 @@ def edit_post(post_id):
 # Delete Post
 # ---------------
 @app.route("/posts/<post_id>/delete", methods=["POST"])
+@login_required
 def delete_post(post_id):
     posts_collection.delete_one({"_id": ObjectId(post_id)})
     return "Deleted successfully", 200
@@ -256,6 +251,7 @@ def delete_post(post_id):
 # Map Page
 # ---------------
 @app.get("/map")
+@login_required
 def map_page():
     # retrieve posts from db
     posts = list(posts_collection.find({}))
