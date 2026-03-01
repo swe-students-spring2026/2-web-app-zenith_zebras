@@ -58,24 +58,15 @@ def load_user(user_id):
         return User(user_data)
     return None
 
-# This is temparary until we implement auth, so we can use url_for() in templates without crashing
-
+# ---------------
+# Root
+# ---------------
 # the root page should redirect to home page
 # the authentification logic to check if the user is logged in or not
 # and furthur redirect to login / sign up page should be verified on the home page
 @app.get("/")
 def root():
     return redirect('/home')
-
-# ---------------
-# Auth guard
-# ---------------
-
-
-# ---------------
-# landing
-# ---------------
-
 
 # ---------------
 # Login 
