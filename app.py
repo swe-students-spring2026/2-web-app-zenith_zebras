@@ -1,11 +1,10 @@
-from flask import Flask, request, session, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template
 from flask_login import (
     LoginManager,
     UserMixin,
     login_user,
     login_required,
     logout_user,
-    current_user
 )
 from pymongo import MongoClient
 from bson.objectid import ObjectId
