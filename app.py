@@ -247,10 +247,16 @@ def edit_post(post_id):
 # ---------------
 # Delete Post
 # ---------------
-@app.route("/posts/<post_id>/delete", methods=["POST"])
+@app.route("/posts/<post_id>/delete", methods=["GET", "POST"])
 def delete_post(post_id):
+    post = posts_collection.find_one({"_id": ObjectId(post_id)})
+    if not post:
+        return "Post not found", 404
+    if request.method == "GET":
+        post["_id"] = str(post["_id"])
+        return render_template("delete_confirm.html", post=post)
     posts_collection.delete_one({"_id": ObjectId(post_id)})
-    return "Deleted successfully", 200
+    return redirect(url_for("home"))
 
 # ---------------
 # Map Page
