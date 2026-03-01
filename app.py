@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, redirect, url_for, render_template
+from flask import Flask, request, session, redirect, url_for, render_template
 from flask_login import (
     LoginManager,
     UserMixin,
@@ -148,8 +148,10 @@ def signup():
     return render_template("signup.html")
 
 
+@login_required
 @app.get("/logout")
 def logout():
+    logout_user()
     return redirect(url_for("root"))
 
 # ---------------
@@ -159,7 +161,7 @@ def logout():
 # TODO when get request sent, should check if logged in, if not redirect to login / sign up
 
 @app.get("/home")
-#@login_required
+@login_required
 def home():
     #Search Querey
     q = request.args.get("q", "").strip()
@@ -178,6 +180,7 @@ def home():
 # View Post
 # ---------------
 @app.route("/posts/<post_id>")
+@login_required
 def view_post(post_id):
     post = posts_collection.find_one({"_id": ObjectId(post_id)})
     if not post:
@@ -188,6 +191,7 @@ def view_post(post_id):
 # Create Post
 # ---------------
 @app.route("/posts/create", methods=["GET", "POST"])
+@login_required
 def create_post():
     if request.method == "POST":
         post_data = {
@@ -225,6 +229,7 @@ def create_post():
 # Edit Post
 # ---------------
 @app.route("/posts/<post_id>/edit", methods=["GET", "POST"])
+@login_required
 def edit_post(post_id):
     post = posts_collection.find_one({"_id": ObjectId(post_id)})
     if request.method == "POST":
@@ -248,6 +253,7 @@ def edit_post(post_id):
 # Delete Post
 # ---------------
 @app.route("/posts/<post_id>/delete", methods=["POST"])
+@login_required
 def delete_post(post_id):
     posts_collection.delete_one({"_id": ObjectId(post_id)})
     return "Deleted successfully", 200
@@ -256,6 +262,7 @@ def delete_post(post_id):
 # Map Page
 # ---------------
 @app.get("/map")
+@login_required
 def map_page():
     # retrieve posts from db
     posts = list(posts_collection.find({}))
