@@ -19,7 +19,12 @@
         <input type="text" name="location" id="location" value="{{ post.location }}" required><br><br>
 
         <label for="googlemaps">Google Maps URL:</label>
-        <input type="text" name="googlemaps" id="googlemaps" value="{{ post.googlemaps }}" required><br><br>
+        <!-- Show validation error in red under the field when URL is invalid -->
+        <input type="text" name="googlemaps" id="googlemaps" value="{{ post.googlemaps }}" required>
+        {% if googlemaps_error %}
+        <p style="color: #c00; margin: 4px 0 0;">{{ googlemaps_error }}</p>
+        {% endif %}
+        <br><br>
 
         <label for="noise_level">Noise Level:</label>
         <input type="text" name="noise_level" id="noise_level" value="{{ post.noise_level }}" required><br><br>
@@ -37,10 +42,18 @@
         <input type="text" name="reservable" id="reservable" value="{{ post.reservable }}" required><br><br>
 
         <label for="climate">Climate:</label>
-        <input type="text" name="climate" id="climate" value="{{ post.climate }}" required><br><br>
+        <!-- Climate input with preset suggestions; user can also type a custom value -->
+        <input type="text" name="climate" id="climate" list="climate-options" value="{{ post.climate }}" placeholder="Cool, Comfortable, Warm or type your own" required><br><br>
 
         <label for="hours">Hours:</label>
         <input type="text" name="hours" id="hours" value="{{ post.hours }}" required><br><br>
+
+        <!-- Shared climate presets datalist for both create and edit forms -->
+        <datalist id="climate-options">
+            <option value="Cool">
+            <option value="Comfortable">
+            <option value="Warm">
+        </datalist>
 
         <button type="submit">Update Post</button>
     </form>

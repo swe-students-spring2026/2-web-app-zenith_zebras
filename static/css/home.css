@@ -41,3 +41,43 @@
     font-size: 16px; 
     outline: none; 
 }
+
+/* Layout and styling for the list of places on the homepage */
+.places {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.place-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: var(--border);
+  background-color: #fff;
+
+  text-decoration: none;
+  color: inherit;
+}
+
+.place-card:active {
+  transform: translateY(1px);
+}
+
+.place-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.place-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.place-hours {
+  font-size: 13px;
+  color: #555;
+}
