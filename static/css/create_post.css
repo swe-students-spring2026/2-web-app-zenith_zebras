@@ -93,6 +93,30 @@
   text-align: center;
 }
 
+/* Opening hours: start/end dropdowns and validation error */
+.hours-dropdowns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hours-select {
+  min-height: 48px;
+  padding: 0 10px;
+  font-size: 16px;
+}
+
+.hours-sep {
+  color: #555;
+  font-weight: 500;
+}
+
+.hours-error {
+  color: #c00;
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
 /* shared select style */
 .select {
   width: 100%;

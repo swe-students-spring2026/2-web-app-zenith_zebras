@@ -33,11 +33,55 @@
 }
 
 .search-input { 
-    width: 100%; 
-    min-height: 48px;
-    border: var(--border); 
-    border-radius: var(--radius); 
-    padding: 0 12px; 
-    font-size: 16px; 
-    outline: none; 
+  width: 100%;
+  min-height: 48px;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  font-size: 16px;
+  outline: none;
+}
+
+/* Layout and styling for search filters on the home page */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin-top: 10px;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-label {
+  font-size: 13px;
+  color: #444;
+}
+
+.filter-select {
+  min-height: 36px;
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 0 8px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.search-submit {
+  margin-top: 10px;
+  width: 100%;
+  min-height: 40px;
+  border-radius: var(--radius);
+  border: none;
+  background-color: #111;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.search-submit:active {
+  transform: translateY(1px);
 }
