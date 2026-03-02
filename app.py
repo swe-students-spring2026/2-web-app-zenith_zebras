@@ -14,6 +14,16 @@ from dotenv import load_dotenv
 import re # for confirm email function, also for parsing google map link parsing
 from werkzeug.security import generate_password_hash, check_password_hash # for password hashing
 
+
+def _is_valid_google_maps_url(url: str) -> bool:
+    """Simple format check for Google Maps URLs used on create/edit forms."""
+    if not url or not isinstance(url, str):
+        return False
+    u = url.strip().lower()
+    if not (u.startswith("http://") or u.startswith("https://")):
+        return False
+    return ("google.com/maps" in u) or ("goo.gl/maps" in u) or ("maps.app.goo.gl" in u)
+
 load_dotenv()
 
 MONGO_USER = os.getenv("MONGO_USER")
@@ -182,10 +192,32 @@ def view_post(post_id):
 @login_required
 def create_post():
     if request.method == "POST":
+        googlemaps = (request.form.get("googlemaps") or "").strip()
+        googlemaps_error = None
+        # Validate Google Maps URL; on error re-render form with all fields kept
+        if not _is_valid_google_maps_url(googlemaps):
+            googlemaps_error = "Invalid Google Maps URL. Please paste a link from Google Maps."
+
+        if googlemaps_error:
+            # Re-render create form with submitted values and red error message under the URL field
+            post = {
+                "netid": request.form.get("netid", ""),
+                "location": request.form.get("location", ""),
+                "googlemaps": googlemaps,
+                "noise_level": request.form.get("noise_level", ""),
+                "seating": request.form.get("seating", ""),
+                "wifi": request.form.get("wifi", ""),
+                "outlets": request.form.get("outlets", ""),
+                "reservable": request.form.get("reservable", ""),
+                "climate": request.form.get("climate", ""),
+                "hours": request.form.get("hours", ""),
+            }
+            return render_template("create_post.html", post=post, googlemaps_error=googlemaps_error)
+
         post_data = {
             "netid": request.form.get("netid"),
             "location": request.form.get("location"),
-            "googlemaps": request.form.get("googlemaps"),
+            "googlemaps": googlemaps,
             "noise_level": request.form.get("noise_level"),
             "seating": request.form.get("seating"),
             "wifi": request.form.get("wifi"),
@@ -221,10 +253,16 @@ def create_post():
 def edit_post(post_id):
     post = posts_collection.find_one({"_id": ObjectId(post_id)})
     if request.method == "POST":
+        googlemaps = (request.form.get("googlemaps") or "").strip()
+        googlemaps_error = None
+        # Validate Google Maps URL; on error re-render form with all fields kept
+        if not _is_valid_google_maps_url(googlemaps):
+            googlemaps_error = "Invalid Google Maps URL. Please paste a link from Google Maps."
+
         updated_data = {
             "netid": request.form.get("netid"),
             "location": request.form.get("location"),
-            "googlemaps": request.form.get("googlemaps"),
+            "googlemaps": googlemaps,
             "noise_level": request.form.get("noise_level"),
             "seating": request.form.get("seating"),
             "wifi": request.form.get("wifi"),
@@ -233,6 +271,11 @@ def edit_post(post_id):
             "climate": request.form.get("climate"),
             "hours": request.form.get("hours")
         }
+
+        if googlemaps_error:
+            # Re-render edit form with submitted values and red error message under the URL field
+            return render_template("edit_post.html", post=updated_data, googlemaps_error=googlemaps_error)
+
         posts_collection.update_one({"_id": ObjectId(post_id)}, {"$set": updated_data})
         return render_template("edit_post.html", post=updated_data, message="Post updated successfully!")
     return render_template("edit_post.html", post=post)
