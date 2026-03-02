@@ -27,10 +27,15 @@
 
       <section class="places">
         {% for post in posts %}
-          <div class="place-card">
-            <div class="place-name">{{ post.place_name }}</div>
-            <div class="place-loc">{{ post.location }}</div>
-          </div>
+          <!-- Clickable row: goes to detail page for this place -->
+          <a class="place-card" href="{{ url_for('view_post', post_id=post._id) }}">
+            <div class="place-main">
+              <div class="place-name">{{ post.location }}</div>
+              {% if post.hours %}
+                <div class="place-hours">{{ post.hours }}</div>
+              {% endif %}
+            </div>
+          </a>
         {% endfor %}
       </section>
     </main>

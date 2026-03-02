@@ -19,7 +19,11 @@
         <input type="text" name="location" id="location" value="{{ post.location }}" required><br><br>
 
         <label for="googlemaps">Google Maps URL:</label>
-        <input type="text" name="googlemaps" id="googlemaps" value="{{ post.googlemaps }}" required><br><br>
+        <input type="text" name="googlemaps" id="googlemaps" value="{{ post.googlemaps }}" required>
+        {% if googlemaps_error %}
+        <p style="color: #c00; margin: 4px 0 0;">{{ googlemaps_error }}</p>
+        {% endif %}
+        <br><br>
 
         <label for="noise_level">Noise Level:</label>
         <input type="text" name="noise_level" id="noise_level" value="{{ post.noise_level }}" required><br><br>
@@ -37,10 +41,20 @@
         <input type="text" name="reservable" id="reservable" value="{{ post.reservable }}" required><br><br>
 
         <label for="climate">Climate:</label>
-        <input type="text" name="climate" id="climate" value="{{ post.climate }}" required><br><br>
+        <input type="text" name="climate" id="climate" list="climate-presets" placeholder="Cool, Comfortable, Warm or type your own" value="{{ post.climate }}" required>
+        <datalist id="climate-presets">
+            {% for opt in climate_options %}
+            <option value="{{ opt }}">
+            {% endfor %}
+        </datalist>
+        <br><br>
 
         <label for="hours">Hours:</label>
-        <input type="text" name="hours" id="hours" value="{{ post.hours }}" required><br><br>
+        <input type="text" name="hours" id="hours" value="{{ post.hours }}" required>
+        {% if hours_error %}
+        <p style="color: #c00; margin: 4px 0 0;">{{ hours_error }}</p>
+        {% endif %}
+        <br><br>
 
         <button type="submit">Update Post</button>
     </form>
