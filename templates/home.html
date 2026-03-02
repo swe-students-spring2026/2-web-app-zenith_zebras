@@ -23,6 +23,68 @@
 
       <form class="search" method="GET" action="{{ url_for('home') }}">
         <input class="search-input" type="text" name="q" placeholder="Search By Name" value="{{ q or '' }}">
+
+        <!-- Filter controls for noise level, Wi-Fi, outlets, and reservable -->
+        <div class="filters">
+          <div class="filter">
+            <label class="filter-label" for="noise_level">Noise level</label>
+            <select class="filter-select" name="noise_level" id="noise_level">
+              <option value="">Any</option>
+              <option value="Silent Study" {% if noise_level == 'Silent Study' %}selected{% endif %}>Silent Study</option>
+              <option value="Quiet Pair" {% if noise_level == 'Quiet Pair' %}selected{% endif %}>Quiet Pair</option>
+              <option value="Fit for Group" {% if noise_level == 'Fit for Group' %}selected{% endif %}>Fit for Group</option>
+            </select>
+          </div>
+
+          <div class="filter">
+            <label class="filter-label" for="wifi">Wi‑Fi</label>
+            <select class="filter-select" name="wifi" id="wifi">
+              <option value="">Any</option>
+              <option value="Yes" {% if wifi == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if wifi == 'No' %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <div class="filter">
+            <label class="filter-label" for="outlets">Outlets</label>
+            <select class="filter-select" name="outlets" id="outlets">
+              <option value="">Any</option>
+              <option value="Yes" {% if outlets == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if outlets == 'No' %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <div class="filter">
+            <label class="filter-label" for="reservable">Reservable</label>
+            <select class="filter-select" name="reservable" id="reservable">
+              <option value="">Any</option>
+              <option value="Yes" {% if reservable == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if reservable == 'No' %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <!-- Opening hours filter: place shown if its hours contain the chosen start–end interval -->
+          <div class="filter">
+            <label class="filter-label" for="start_time">Start time</label>
+            <select class="filter-select" name="start_time" id="start_time">
+              <option value="">Any</option>
+              {% for t in time_options %}
+              <option value="{{ t }}" {% if start_time == t %}selected{% endif %}>{{ t }}{% if t == '24:00' %} (next day){% endif %}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="filter">
+            <label class="filter-label" for="end_time">End time</label>
+            <select class="filter-select" name="end_time" id="end_time">
+              <option value="">Any</option>
+              {% for t in time_options %}
+              <option value="{{ t }}" {% if end_time == t %}selected{% endif %}>{{ t }}{% if t == '24:00' %} (next day){% endif %}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <button class="search-submit" type="submit">Apply Filters</button>
       </form>
 
       <section class="places">

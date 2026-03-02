@@ -39,8 +39,22 @@
         <label for="climate">Climate:</label>
         <input type="text" name="climate" id="climate" value="{{ post.climate }}" required><br><br>
 
-        <label for="hours">Hours:</label>
-        <input type="text" name="hours" id="hours" value="{{ post.hours }}" required><br><br>
+        <label>Hours:</label>
+        <select name="hours_start" id="hours_start" required>
+            {% for t in time_options %}
+            <option value="{{ t }}" {% if post.hours_start == t %}selected{% endif %}>{{ t }}</option>
+            {% endfor %}
+        </select>
+        –
+        <select name="hours_end" id="hours_end" required>
+            {% for t in time_options %}
+            <option value="{{ t }}" {% if post.hours_end == t %}selected{% endif %}>{{ t }}</option>
+            {% endfor %}
+        </select>
+        {% if hours_error %}
+        <p style="color: #c00; margin-top: 6px;">{{ hours_error }}</p>
+        {% endif %}
+        <br><br>
 
         <button type="submit">Update Post</button>
     </form>
