@@ -18,13 +18,12 @@ load_dotenv()
 
 MONGO_USER = os.getenv("MONGO_USER")
 MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
-MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
+MONGO_HOST = os.getenv("MONGO_HOST", "study_spots_mongo")
 MONGO_PORT = int(os.getenv("MONGO_PORT", 27017))
 MONGO_DBNAME = os.getenv("MONGO_DBNAME")
 
 
-MONGO_URI = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/{MONGO_DBNAME}?authSource=admin"
-
+MONGO_URI = f"mongodb://{MONGO_HOST}:{MONGO_PORT}/"
 client = MongoClient(MONGO_URI)
 db = client[MONGO_DBNAME]
 posts_collection = db.posts
