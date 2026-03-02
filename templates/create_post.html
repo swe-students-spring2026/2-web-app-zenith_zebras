@@ -51,18 +51,24 @@
                 <label class="choice-box" for="reservable_no">No</label>
             </div>
 
-            <!-- Climate row -->
+            <!-- Hours row -->
             <div class="hours-grid">
                 <div class="hours-label">Hours</div>
 
                 <input class="input hours-input" type="text" name="hours" placeholder="Open from-Open to" required>
             </div>
 
-            <!-- Hours row -->
+            <!-- Climate: single input with preset suggestions or custom text -->
             <div class="climate-grid">
                 <div class="climate-label">Climate</div>
-
-                <input class="input climate-input" type="text" name="climates" placeholder="Sunny/Windy" required>
+                <div>
+                    <input class="input climate-input" type="text" name="climate" id="climate" list="climate-options" placeholder="Cool, Comfortable, Warm or type your own" required>
+                    <datalist id="climate-options">
+                        <option value="Cool">
+                        <option value="Comfortable">
+                        <option value="Warm">
+                    </datalist>
+                </div>
             </div>
 
             <button class="finish" type="submit">Create Post</button>

@@ -37,10 +37,18 @@
         <input type="text" name="reservable" id="reservable" value="{{ post.reservable }}" required><br><br>
 
         <label for="climate">Climate:</label>
-        <input type="text" name="climate" id="climate" value="{{ post.climate }}" required><br><br>
+        <!-- Climate input with preset suggestions; user can also type a custom value -->
+        <input type="text" name="climate" id="climate" list="climate-options" value="{{ post.climate }}" placeholder="Cool, Comfortable, Warm or type your own" required><br><br>
 
         <label for="hours">Hours:</label>
         <input type="text" name="hours" id="hours" value="{{ post.hours }}" required><br><br>
+
+        <!-- Shared climate presets datalist for both create and edit forms -->
+        <datalist id="climate-options">
+            <option value="Cool">
+            <option value="Comfortable">
+            <option value="Warm">
+        </datalist>
 
         <button type="submit">Update Post</button>
     </form>
