@@ -18,13 +18,12 @@ load_dotenv()
 
 MONGO_USER = os.getenv("MONGO_USER")
 MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
-MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
+MONGO_HOST = os.getenv("MONGO_HOST", "study_spots_mongo")
 MONGO_PORT = int(os.getenv("MONGO_PORT", 27017))
 MONGO_DBNAME = os.getenv("MONGO_DBNAME")
 
 
-MONGO_URI = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/{MONGO_DBNAME}?authSource=admin"
-
+MONGO_URI = f"mongodb://{MONGO_HOST}:{MONGO_PORT}/"
 client = MongoClient(MONGO_URI)
 db = client[MONGO_DBNAME]
 posts_collection = db.posts
@@ -241,11 +240,16 @@ def edit_post(post_id):
 # ---------------
 # Delete Post
 # ---------------
-@app.route("/posts/<post_id>/delete", methods=["POST"])
-@login_required
+@app.route("/posts/<post_id>/delete", methods=["GET", "POST"])
 def delete_post(post_id):
+    post = posts_collection.find_one({"_id": ObjectId(post_id)})
+    if not post:
+        return "Post not found", 404
+    if request.method == "GET":
+        post["_id"] = str(post["_id"])
+        return render_template("delete_confirm.html", post=post)
     posts_collection.delete_one({"_id": ObjectId(post_id)})
-    return "Deleted successfully", 200
+    return redirect(url_for("home"))
 
 # ---------------
 # Map Page

@@ -28,8 +28,10 @@
       <section class="places">
         {% for post in posts %}
           <div class="place-card">
-            <div class="place-name">{{ post.place_name }}</div>
-            <div class="place-loc">{{ post.location }}</div>
+            <a class="place-link" href="{{ url_for('view_post', post_id=post._id) }}">
+              <div class="place-name">{{ post.place_name }}</div>
+              <div class="place-loc">{{ post.location }}</div>
+            </a>
           </div>
         {% endfor %}
       </section>

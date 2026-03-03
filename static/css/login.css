@@ -34,6 +34,10 @@
   font-weight: 500;
 }
 
+.login_button:active {
+  transform: translateY(1px);
+}
+
 /* Bottom link section */
 .login_footer {
   margin-top: 18px;
