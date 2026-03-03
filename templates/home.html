@@ -14,7 +14,7 @@
       <header class="header">
         <h1 class="page-title">HomePage</h1>
       </header>
-
+      <p>You are logged in as {{ current_user.netid }} </p>
       <nav class="top-buttons">
         <a class="btn" href="{{ url_for('create_post') }}">Create<br>Post</a>
         <a class="btn" href="{{ url_for('map_page') }}">Map</a>
