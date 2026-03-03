@@ -44,4 +44,5 @@ docker-compose up --build -d
 ## Task boards
 
 [Task Board](https://github.com/orgs/swe-students-spring2026/projects/3)
+
 [Issues Page](https://github.com/swe-students-spring2026/2-web-app-zenith_zebras/issues)
