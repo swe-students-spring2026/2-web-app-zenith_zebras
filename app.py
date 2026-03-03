@@ -13,6 +13,7 @@ import os
 from dotenv import load_dotenv
 import re # for confirm email function, also for parsing google map link parsing
 from werkzeug.security import generate_password_hash, check_password_hash # for password hashing
+from flask_login import current_user  # to keep track of curr user
 
 load_dotenv()
 
@@ -183,7 +184,7 @@ def view_post(post_id):
 def create_post():
     if request.method == "POST":
         post_data = {
-            "netid": request.form.get("netid"),
+            "netid": current_user.netid,
             "location": request.form.get("location"),
             "googlemaps": request.form.get("googlemaps"),
             "noise_level": request.form.get("noise_level"),
