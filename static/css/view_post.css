@@ -80,3 +80,17 @@ a[href*="delete"] > button {
 a[href*="delete"] > button:active {
   background: #cc3c3c;
 }
+
+.button-row {
+  display: flex;
+  gap: 12px;
+}
+
+.button-row a {
+  flex: 1;
+}
+
+.button-row a > button {
+  width: 100%;
+  margin-top: 0;
+}

@@ -65,7 +65,10 @@
                 <input class="input climate-input" type="text" name="climates" placeholder="Sunny/Windy" required>
             </div>
 
-            <button class="finish" type="submit">Create Post</button>
+            <div class="button-row">
+              <button class="finish" type="submit">Create Post</button>
+              <a class="finish" href="{{ url_for('home') }}">Home</a>
+            </div>
 
         </form>
     </main>
