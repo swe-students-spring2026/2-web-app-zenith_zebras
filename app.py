@@ -223,7 +223,6 @@ def edit_post(post_id):
     post = posts_collection.find_one({"_id": ObjectId(post_id)})
     if request.method == "POST":
         updated_data = {
-            "netid": request.form.get("netid"),
             "location": request.form.get("location"),
             "googlemaps": request.form.get("googlemaps"),
             "noise_level": request.form.get("noise_level"),
@@ -235,7 +234,7 @@ def edit_post(post_id):
             "hours": request.form.get("hours")
         }
         posts_collection.update_one({"_id": ObjectId(post_id)}, {"$set": updated_data})
-        return render_template("edit_post.html", post=updated_data, message="Post updated successfully!")
+        return redirect(url_for("view_post", post_id=post_id))
     return render_template("edit_post.html", post=post)
 
 # ---------------
