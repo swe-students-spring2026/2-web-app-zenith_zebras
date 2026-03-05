@@ -42,7 +42,8 @@ cp .env.example .env
 docker-compose up --build -d
 ```
 ### 3. Open web browser
-Click here: [link](http://localhost:3000) or input http://localhost:3000 in browser
+Click [here](http://localhost:3000) or input http://localhost:3000 in your browser.
+
 ### 4. Stop containers when done
 ```bash
 docker compose down
