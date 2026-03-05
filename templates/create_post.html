@@ -15,54 +15,68 @@
         </header>
 
         <form class="form" method="POST" action="{{ url_for('create_post') }}">
-            <input class="input input-big" type="text" name="location" id="location" placeholder="Name of Place" required>
+            <input class="input input-big" type="text" name="location" id="location" placeholder="Name of Place" value="{{ post.location or '' }}" required>
 
-            <input class="input input-big" type="text" name="googlemaps" id="googlemaps" placeholder="Link to google maps" required>
+            <input class="input input-big" type="text" name="googlemaps" id="googlemaps" placeholder="Link to google maps" value="{{ post.googlemaps or '' }}" required>
 
             <div class="choice-row">
-                <input class="choice" type="radio" name="seating" id="seat_silent" value="Silent Study" required>
+                <input class="choice" type="radio" name="seating" id="seat_silent" value="Silent Study" {% if post.seating == 'Silent Study' %}checked{% endif %} required>
                 <label class="choice-box" for="seat_silent">Silent<br>Study</label>
 
-                <input class="choice" type="radio" name="seating" id="seat_quiet" value="Quiet Pair" required>
+                <input class="choice" type="radio" name="seating" id="seat_quiet" value="Quiet Pair" {% if post.seating == 'Quiet Pair' %}checked{% endif %} required>
                 <label class="choice-box" for="seat_quiet">Quiet<br>Pair</label>
 
-                <input class="choice" type="radio" name="seating" id="seat_group" value="Fit for Group" required>
+                <input class="choice" type="radio" name="seating" id="seat_group" value="Fit for Group" {% if post.seating == 'Fit for Group' %}checked{% endif %} required>
                 <label class="choice-box" for="seat_group">Fit for<br>Group</label>
             </div>
 
             <!-- Yes/No rows-->
              <div class="yn-grid">
                 <div class="yn-label">Wifi-</div>
-                <input class="choice" type="radio" name="wifi" id="wifi_yes" value="Yes" required>
+                <input class="choice" type="radio" name="wifi" id="wifi_yes" value="Yes" {% if post.wifi == 'Yes' %}checked{% endif %} required>
                 <label class="choice-box" for="wifi_yes">Yes</label>
-                <input class="choice" type="radio" name="wifi" id="wifi_no" value="No">
+                <input class="choice" type="radio" name="wifi" id="wifi_no" value="No" {% if post.wifi == 'No' %}checked{% endif %}>
                 <label class="choice-box" for="wifi_no">No</label>
 
                 <div class="yn-label">Outlets-</div>
-                <input class="choice" type="radio" name="outlets" id="outlets_yes" value="Yes" required>
+                <input class="choice" type="radio" name="outlets" id="outlets_yes" value="Yes" {% if post.outlets == 'Yes' %}checked{% endif %} required>
                 <label class="choice-box" for="outlets_yes">Yes</label>
-                <input class="choice" type="radio" name="outlets" id="outlets_no" value="No">
+                <input class="choice" type="radio" name="outlets" id="outlets_no" value="No" {% if post.outlets == 'No' %}checked{% endif %}>
                 <label class="choice-box" for="outlets_no">No</label>
 
                 <div class="yn-label">Reservable-</div>
-                <input class="choice" type="radio" name="reservable" id="reservable_yes" value="Yes" required>
+                <input class="choice" type="radio" name="reservable" id="reservable_yes" value="Yes" {% if post.reservable == 'Yes' %}checked{% endif %} required>
                 <label class="choice-box" for="reservable_yes">Yes</label>
-                <input class="choice" type="radio" name="reservable" id="reservable_no" value="No">
+                <input class="choice" type="radio" name="reservable" id="reservable_no" value="No" {% if post.reservable == 'No' %}checked{% endif %}>
                 <label class="choice-box" for="reservable_no">No</label>
             </div>
 
-            <!-- Climate row -->
+            <!-- Opening hours: two dropdowns (per hour), same as homepage filter; validated so end > start -->
             <div class="hours-grid">
                 <div class="hours-label">Hours</div>
-
-                <input class="input hours-input" type="text" name="hours" placeholder="Open from-Open to" required>
+                <div class="hours-dropdowns">
+                    <select class="input hours-select" name="hours_start" id="hours_start" required>
+                        {% for t in time_options %}
+                        <option value="{{ t }}" {% if post.hours_start == t %}selected{% endif %}>{{ t }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="hours-sep">–</span>
+                    <select class="input hours-select" name="hours_end" id="hours_end" required>
+                        {% for t in time_options %}
+                        <option value="{{ t }}" {% if post.hours_end == t %}selected{% endif %}>{{ t }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% if hours_error %}
+                <p class="hours-error">{{ hours_error }}</p>
+                {% endif %}
             </div>
 
-            <!-- Hours row -->
+            <!-- Climate row -->
             <div class="climate-grid">
                 <div class="climate-label">Climate</div>
 
-                <input class="input climate-input" type="text" name="climates" placeholder="Sunny/Windy" required>
+                <input class="input climate-input" type="text" name="climates" placeholder="Sunny/Windy" value="{{ post.climate or '' }}" required>
             </div>
 
             <button class="finish" type="submit">Create Post</button>
