@@ -1,0 +1,96 @@
+/* Title spacing */
+h1 {
+  margin: 0 0 18px 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* make each <p> look like a clean info card row */
+p {
+  margin: 0 0 12px 0;
+  padding: 12px 14px;
+
+  border: var(--border);
+  border-radius: var(--radius);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+
+  background: #fff;
+}
+
+/* Left label (the <strong>) */
+p strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* Right side value */
+p strong + * {
+  font-size: 14px;
+  color: #111;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+/* Google Maps link */
+p a {
+  color: #111;
+  text-decoration: underline;
+}
+
+br {
+  display: none;
+}
+
+/* Make anchor wrappers block-level */
+a {
+  display: block;
+  text-decoration: none;
+}
+
+a > button {
+  width: 100%;
+  min-height: 64px;
+  margin-top: 14px;
+
+  border-radius: var(--radius);
+  border: 1px solid #cfcfcf;
+  background: #d9d9d9;
+
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+a > button:active {
+  transform: translateY(1px);
+}
+
+a[href*="delete"] > button {
+  background: #e54848;
+  border: 1px solid #d83c3c;
+  color: #fff;
+}
+
+a[href*="delete"] > button:active {
+  background: #cc3c3c;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+}
+
+.button-row a {
+  flex: 1;
+}
+
+.button-row a > button {
+  width: 100%;
+  margin-top: 0;
+}

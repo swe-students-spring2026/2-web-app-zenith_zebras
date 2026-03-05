@@ -13,6 +13,7 @@ import os
 from dotenv import load_dotenv
 import re # for confirm email function, also for parsing google map link parsing
 from werkzeug.security import generate_password_hash, check_password_hash # for password hashing
+from flask_login import current_user  # to keep track of curr user
 
 
 # ---------------------------------------------------------------------------
@@ -85,13 +86,12 @@ load_dotenv()
 
 MONGO_USER = os.getenv("MONGO_USER")
 MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
-MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
+MONGO_HOST = os.getenv("MONGO_HOST", "study_spots_mongo")
 MONGO_PORT = int(os.getenv("MONGO_PORT", 27017))
 MONGO_DBNAME = os.getenv("MONGO_DBNAME")
 
 
-MONGO_URI = f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/{MONGO_DBNAME}?authSource=admin"
-
+MONGO_URI = f"mongodb://{MONGO_HOST}:{MONGO_PORT}/"
 client = MongoClient(MONGO_URI)
 db = client[MONGO_DBNAME]
 posts_collection = db.posts
@@ -330,7 +330,7 @@ def create_post():
 
         hours = f"{hours_start}-{hours_end}" if hours_start and hours_end else ""
         post_data = {
-            "netid": request.form.get("netid"),
+            "netid": current_user.netid,
             "location": request.form.get("location"),
             "googlemaps": request.form.get("googlemaps"),
             "noise_level": request.form.get("noise_level"),
@@ -379,7 +379,6 @@ def edit_post(post_id):
             if start_min is None or end_min is None or start_min >= end_min:
                 hours_error = "End time must be after start time."
         updated_data = {
-            "netid": request.form.get("netid"),
             "location": request.form.get("location"),
             "googlemaps": request.form.get("googlemaps"),
             "noise_level": request.form.get("noise_level"),
@@ -402,7 +401,12 @@ def edit_post(post_id):
         posts_collection.update_one({"_id": ObjectId(post_id)}, {"$set": updated_data})
         updated_data["_id"] = str(post["_id"])
         updated_data["hours_start"], updated_data["hours_end"] = hours_start, hours_end
-        return render_template("edit_post.html", post=updated_data, time_options=_TIME_OPTIONS, message="Post updated successfully!")
+        return render_template(
+            "edit_post.html",
+            post=updated_data,
+            time_options=_TIME_OPTIONS,
+            message="Post updated successfully!",
+        )
     post["_id"] = str(post["_id"])
     # Pre-fill hours dropdowns from stored string (e.g. '9:00-17:00' -> start=09:00, end=17:00)
     post["hours_start"], post["hours_end"] = _parse_hours_to_start_end(post.get("hours"))
@@ -446,4 +450,4 @@ def map_page():
     return render_template("map.html", posts=posts)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=3000, debug=True)

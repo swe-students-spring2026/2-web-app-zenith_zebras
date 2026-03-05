@@ -31,17 +31,25 @@ Our app helps students discover NYU study spaces through peer feedback, enabling
 11. As an NYU student, I want to have a user in the app so that I can use it.
 
 ## Steps necessary to run the software
-
-### 1. Copy environment file
+### 1. Docker
+Install and run [Docker](https://www.docker.com/get-started/) and create an account
+### 2. Copy environment file
 ```bash
 cp .env.example .env
 ```
-### 2. Build and run containers
+### 3. Build and run containers
 ```bash
 docker-compose up --build -d
 ```
+### 3. Open web browser
+Click [here](http://localhost:3000) or input http://localhost:3000 in your browser.
 
+### 4. Stop containers when done
+```bash
+docker compose down
+```
 ## Task boards
 
 [Task Board](https://github.com/orgs/swe-students-spring2026/projects/3)
+
 [Issues Page](https://github.com/swe-students-spring2026/2-web-app-zenith_zebras/issues)

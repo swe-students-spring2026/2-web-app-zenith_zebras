@@ -14,7 +14,7 @@
       <header class="header">
         <h1 class="page-title">HomePage</h1>
       </header>
-
+      <p>You are logged in as {{ current_user.netid }} </p>
       <nav class="top-buttons">
         <a class="btn" href="{{ url_for('create_post') }}">Create<br>Post</a>
         <a class="btn" href="{{ url_for('map_page') }}">Map</a>
@@ -90,8 +90,10 @@
       <section class="places">
         {% for post in posts %}
           <div class="place-card">
-            <div class="place-name">{{ post.place_name }}</div>
-            <div class="place-loc">{{ post.location }}</div>
+            <a class="place-link" href="{{ url_for('view_post', post_id=post._id) }}">
+              <div class="place-name">{{ post.place_name }}</div>
+              <div class="place-loc">{{ post.location }}</div>
+            </a>
           </div>
         {% endfor %}
       </section>
