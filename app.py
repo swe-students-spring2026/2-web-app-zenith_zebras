@@ -397,16 +397,8 @@ def edit_post(post_id):
         updated_data["hours"] = hours
         del updated_data["hours_start"]
         del updated_data["hours_end"]
-        # Persist only DB fields; then re-add hours_start/end for template dropdowns
         posts_collection.update_one({"_id": ObjectId(post_id)}, {"$set": updated_data})
-        updated_data["_id"] = str(post["_id"])
-        updated_data["hours_start"], updated_data["hours_end"] = hours_start, hours_end
-        return render_template(
-            "edit_post.html",
-            post=updated_data,
-            time_options=_TIME_OPTIONS,
-            message="Post updated successfully!",
-        )
+        return redirect(url_for("view_post", post_id=post_id))
     post["_id"] = str(post["_id"])
     # Pre-fill hours dropdowns from stored string (e.g. '9:00-17:00' -> start=09:00, end=17:00)
     post["hours_start"], post["hours_end"] = _parse_hours_to_start_end(post.get("hours"))
